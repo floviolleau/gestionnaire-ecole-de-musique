@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Account | Symfony Starter {% endblock %}
+
+{% block body %}
+    <main role="main" style="margin-top: 30px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 title_header">
+                    <h3> Profile Information </h3>
+
+                    {% for message in app.flashes('notice') %}
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <strong>Success!</strong> {{ message }}
+                        </div>
+                    {% endfor %}
+
+                    {% if not app.user.isVerified %}
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <strong>Email not verified!</strong>
+                    </div>
+                    {% endif %}
+
+                    {% for message in app.flashes('password') %}
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <strong>Success!</strong> {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-12">
+                    <form action="{{ url('app_profile_update') }}" method="POST">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label font-weight-bold text-right" for="email">Email</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="email" name="email" id="email"
+                                       value="{{ app.user.getEmail() }}" autocomplete="email">
+                            </div>
+                            {% if app.user.isVerified %}
+                                <i class="fa fa-check"></i>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label font-weight-bold text-right" for="first_name">First
+                                Name</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" value="{{ app.user.getFirstName() }}"
+                                       placeholder="Firstname" name="first_name" id="first_name"
+                                       autocomplete="first_name">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label font-weight-bold text-right" for="last_name">Last
+                                Name</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" value="{{ app.user.getLastName() }}"
+                                       placeholder="Lastname" name="last_name" id="last_name" autocomplete="last_name">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label font-weight-bold text-right"
+                                   for="location">Location</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" value="{{ app.user.getLocation() }}"
+                                       placeholder="France" name="location" id="location" autocomplete="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label font-weight-bold text-right"
+                                   for="website">Website</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="text" value="{{ app.user.getWebsite() }}"
+                                       placeholder="https://domain.com" name="website" id="website"
+                                       autocomplete="url">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="offset-sm-3 col-md-7 pl-2">
+                                <button class="btn btn btn-primary" type="submit">
+                                    <i class="fas fa-pencil-alt fa-sm"></i>Update Profile
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 title_header">
+                    <h3> Change Password </h3>
+                </div>
+
+                <div class="col-md-12">
+                    <form action="{{ url('app_change_password') }}" method="POST">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label font-weight-bold text-right" for="password">New
+                                Password</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="password" name="password" id="password"
+                                       autocomplete="new-password" aria-autocomplete="list">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label font-weight-bold text-right" for="confirmPassword">Confirm
+                                Password</label>
+                            <div class="col-md-7">
+                                <input class="form-control" type="password" name="confirmPassword" id="confirmPassword"
+                                       autocomplete="new-password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="offset-sm-3 col-md-7 pl-2">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-lock fa-sm"></i>&nbsp;&nbsp;Change
+                                    Password
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 title_header">
+                    <h3> Delete Account </h3>
+                </div>
+
+                <div class="col-md-12">
+                    <form action="{{ url('app_delete_account') }}" method="POST"
+                          onsubmit="return confirm('Are you sure you want to delete your account?');">
+                        <div class="form-group">
+                            <p class="offset-sm-3 col-md-7 pl-2">You can delete your account, but keep in mind this
+                                action is irreversible.</p>
+                            <div class="offset-sm-3 col-md-7 pl-2">
+                                <button class="btn btn-danger" type="submit">
+                                    <i class="fa fa-trash fa-sm"></i>&nbsp;&nbsp;Delete my account
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
