@@ -1,7 +1,5 @@
 # gestionnaire-ecole-de-musique
 Logiciel de gestion d'une moyenne école de musique développé avec Symfony
-<<<<<<< HEAD
-=======
 
 # symfony/mailer  instructions:
 ```
@@ -48,4 +46,3 @@ created: templates/reset_password/reset.html.twig
 
  Then open your browser, go to "/reset-password" and enjoy!
 ```
->>>>>>> d3559e5 (Authentication pages: Login / Registration / Mail)
